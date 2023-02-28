@@ -3,8 +3,8 @@ import 'package:foldie/widgets/devices_list_view.dart';
 import 'package:foldie/widgets/connect_button.dart';
 import 'package:foldie/widgets/update_button.dart';
 
-class AvailableDevicesScreen extends StatelessWidget {
-  const AvailableDevicesScreen({Key? key}) : super(key: key);
+class AvailableDevicesPage extends StatelessWidget {
+  const AvailableDevicesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

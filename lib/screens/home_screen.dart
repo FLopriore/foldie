@@ -26,7 +26,7 @@ class MyHomePage extends StatelessWidget {
                   appState.getAdbDevices(); // get list of attached devices
                   Navigator.of(context).push(
                     CupertinoPageRoute(
-                      builder: (context) => const AvailableDevicesScreen(),
+                      builder: (context) => const AvailableDevicesPage(),
                     ),
                   );
                 },
