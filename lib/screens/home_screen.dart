@@ -23,7 +23,7 @@ class MyHomePage extends StatelessWidget {
               CupertinoButton.filled(
                 child: Text("Find devices", style: style,),
                 onPressed: () {
-                  appState.getAdbDevices(); // get list of attached devices
+                  appState.getAdbDevices(); // gets list of attached devices
                   Navigator.of(context).push(
                     CupertinoPageRoute(
                       builder: (context) => const AvailableDevicesPage(),
