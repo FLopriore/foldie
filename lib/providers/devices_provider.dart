@@ -4,6 +4,10 @@ import 'package:foldie/utils/adb_commands.dart';
 class DevicesState extends ChangeNotifier {
   List<String> attachedDevicesList = []; // list with attached devices
   String selectedDevice = "";
+  String currentPath = "/storage/emulated/0";
+  List<String> filesList = [];
+  List<String> parentPathFileList = [];
+  String selectedFile = "";
 
   // Runs 'adb devices' command to get all the attached devices and adds
   // them in availableDevicesList.
@@ -50,5 +54,39 @@ class DevicesState extends ChangeNotifier {
           adbDevices.substring(endIndex + end.length + 1); // remaining string
       adbDevices = remainingDevices;
     }
+  }
+
+  // Runs the command 'adb shell ls /name/of/the/path' to get all the folders
+  // and files in the current path and
+  void getFilesInPath() async {
+    String filesInPath = await AdbCommands.getAdbCommand(
+        "-s $selectedDevice shell ls $currentPath");
+
+    if (filesList.isNotEmpty) {
+      filesList.clear();
+    }
+
+    _addFilesInList(filesInPath);
+    selectedFile = filesList.elementAt(0);
+
+    notifyListeners();
+  }
+
+  // Converts the output of 'adb shell ls /name/of/the/path' into a list.
+  void _addFilesInList(String filesInPath) {
+    while (filesInPath.isNotEmpty) {
+      final int endIndex = filesInPath.indexOf("\n");
+      String element = filesInPath.substring(0, endIndex); // file or folder
+      filesList.add(element);
+      String remainingFiles =
+      filesInPath.substring(endIndex + 1); // remaining string
+      filesInPath = remainingFiles;
+    }
+  }
+
+  // Selects the file or folder linked to the index.
+  void selectFile(int index) {
+    selectedFile = filesList.elementAt(index);
+    notifyListeners();
   }
 }
