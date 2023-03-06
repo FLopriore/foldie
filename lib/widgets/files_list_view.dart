@@ -33,15 +33,20 @@ class _FilesListViewState extends State<FilesListView> {
         itemCount: appState.filesList.length,
         itemBuilder: (BuildContext context, int index) {
           String element = appState.filesList.elementAt(index);
-          String extension = p.extension(element);
+          // Checks if element is a folder or a file. The former has an empty
+          // extension, the latter doesn't.
+          bool isFolder = p.extension(element).isEmpty;
           return GestureDetector(
             onTap: () {
               _selectedElementIndex = index;
               appState.selectFile(index);
             },
             onDoubleTap: () {
-              appState.currentPath += "/$element";
-              appState.getFilesInPath();
+              // If element is a folder, enters this folder
+              if (isFolder) {
+                appState.currentPath += "/$element";
+                appState.getFilesInPath();
+              }
             },
             child: ListTile(
               selectedTileColor: CupertinoColors.activeBlue,
@@ -61,7 +66,7 @@ class _FilesListViewState extends State<FilesListView> {
                 },
               ),
               leading: Icon(
-                (extension.isEmpty)
+                (isFolder)
                     ? CupertinoIcons.folder_fill
                     : CupertinoIcons.doc_fill,
                 color: Colors.white,
