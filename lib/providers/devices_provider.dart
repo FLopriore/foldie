@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:foldie/utils/adb_commands.dart';
 
+enum TransferMode {
+  phoneToMac,
+  macToPhone,
+}
+
 class DevicesState extends ChangeNotifier {
-  List<String> attachedDevicesList = []; // list with attached devices
+  List<String> attachedDevicesList = <String>[]; // list with attached devices
   String selectedDevice = "";
   String currentPath = "/storage/emulated/0";
-  List<String> filesList = [];
-  List<String> parentPathFileList = [];
+  List<String> filesList = <String>[];
+  List<String> parentPathFileList = <String>[];
   String selectedFile = "";
+  TransferMode transferMode = TransferMode.macToPhone;
 
   // Runs 'adb devices' command to get all the attached devices and adds
   // them in availableDevicesList.
@@ -88,5 +94,15 @@ class DevicesState extends ChangeNotifier {
   void selectFile(int index) {
     selectedFile = filesList.elementAt(index);
     notifyListeners();
+  }
+
+  // Changes the mode in which files are transferred.
+  // phoneToMac invokes 'adb pull' command.
+  // macToPhone invokes 'adb push' command.
+  void changeTransferMode(TransferMode mode) {
+    if (mode != transferMode) {
+      transferMode = mode;
+      notifyListeners();
+    }
   }
 }
