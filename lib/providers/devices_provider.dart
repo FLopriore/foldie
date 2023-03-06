@@ -63,18 +63,19 @@ class DevicesState extends ChangeNotifier {
   }
 
   // Runs the command 'adb shell ls /name/of/the/path' to get all the folders
-  // and files in the current path and
+  // and files in the current path.
   void getFilesInPath() async {
     String filesInPath = await AdbCommands.getAdbCommand(
         "-s $selectedDevice shell ls $currentPath");
-
-    if (filesList.isNotEmpty) {
+    if (filesInPath.isNotEmpty) {
+      if (filesList.isNotEmpty) {
+        filesList.clear();
+      }
+      _addFilesInList(filesInPath);
+    } else {
       filesList.clear();
+      selectedFile = "";
     }
-
-    _addFilesInList(filesInPath);
-    selectedFile = filesList.elementAt(0);
-
     notifyListeners();
   }
 
