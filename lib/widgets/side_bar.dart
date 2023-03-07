@@ -12,10 +12,14 @@ class SideBar extends StatelessWidget {
     return Material(
       color: CupertinoTheme.of(context).scaffoldBackgroundColor,
       child: ListView(
+        padding: const EdgeInsets.all(10),
         shrinkWrap: true,
         primary: false,
         children: <Widget>[
           ListTile(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))
+            ),
             leading: const Icon(
               CupertinoIcons.arrow_up_circle,
               color: Colors.white,
@@ -31,6 +35,9 @@ class SideBar extends StatelessWidget {
             },
           ),
           ListTile(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))
+            ),
             leading: const Icon(
               CupertinoIcons.arrow_down_circle,
               color: Colors.white,
