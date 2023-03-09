@@ -44,7 +44,7 @@ class _FilesListViewState extends State<FilesListView> {
             onDoubleTap: () {
               // If element is a folder, enters this folder
               if (isFolder) {
-                appState.currentPath += "/$element";
+                appState.currentPhonePath += "/$element";
                 appState.getFilesInPath();
               }
             },
@@ -61,7 +61,7 @@ class _FilesListViewState extends State<FilesListView> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  appState.currentPath += "/$element";
+                  appState.currentPhonePath += "/$element";
                   appState.getFilesInPath();
                 },
               ),
@@ -83,6 +83,5 @@ class _FilesListViewState extends State<FilesListView> {
       child: content,
     );
   }
-
 
 }

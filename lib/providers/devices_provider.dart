@@ -1,15 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:foldie/enums/transfer_mode.dart';
 import 'package:foldie/utils/adb_commands.dart';
-
-enum TransferMode {
-  phoneToMac,
-  macToPhone,
-}
 
 class DevicesState extends ChangeNotifier {
   List<String> attachedDevicesList = <String>[]; // list with attached devices
   String selectedDevice = "";
-  String currentPath = "/storage/emulated/0";
+  String currentPhonePath = "/storage/emulated/0";
   List<String> filesList = <String>[];
   List<String> parentPathFileList = <String>[];
   String selectedFile = "";
@@ -66,7 +62,7 @@ class DevicesState extends ChangeNotifier {
   // and files in the current path.
   void getFilesInPath() async {
     String filesInPath = await AdbCommands.getAdbCommand(
-        "-s $selectedDevice shell ls $currentPath");
+        "-s $selectedDevice shell ls $currentPhonePath");
     if (filesInPath.isNotEmpty) {
       if (filesList.isNotEmpty) {
         filesList.clear();

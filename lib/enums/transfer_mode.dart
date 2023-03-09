@@ -1,0 +1,4 @@
+enum TransferMode {
+  phoneToMac,
+  macToPhone,
+}
