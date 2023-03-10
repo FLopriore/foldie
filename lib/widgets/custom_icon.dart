@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
+/// Creates a custom icon from the asset [icon].
+///
+/// By default, [height] and [width] are set to 32.
+/// Color is null in order to use the original colors of the file.
 class CustomIcon extends StatelessWidget {
   final String icon;
   final double height;
