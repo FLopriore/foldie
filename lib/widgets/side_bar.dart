@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foldie/enums/transfer_mode.dart';
 import 'package:foldie/providers/devices_provider.dart';
 import 'package:provider/provider.dart';
 

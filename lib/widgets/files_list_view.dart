@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foldie/providers/devices_provider.dart';
+import 'package:foldie/widgets/custom_icon.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart' as p;
 
@@ -49,29 +50,26 @@ class _FilesListViewState extends State<FilesListView> {
               }
             },
             child: ListTile(
-              selectedTileColor: CupertinoColors.activeBlue,
-              title: Text(
-                element,
-                style: textStyle,
-              ),
-              selected: index == _selectedElementIndex,
-              trailing: IconButton(
-                icon: const Icon(
-                  CupertinoIcons.forward,
-                  color: Colors.white,
+                selectedTileColor: CupertinoColors.activeBlue,
+                title: Text(
+                  element,
+                  style: textStyle,
                 ),
-                onPressed: () {
-                  appState.currentPhonePath += "/$element";
-                  appState.getFilesInPath();
-                },
-              ),
-              leading: Icon(
-                (isFolder)
-                    ? CupertinoIcons.folder_fill
-                    : CupertinoIcons.doc_fill,
-                color: Colors.white,
-              ),
-            ),
+                selected: index == _selectedElementIndex,
+                trailing: IconButton(
+                  icon: const Icon(
+                    CupertinoIcons.forward,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    appState.currentPhonePath += "/$element";
+                    appState.getFilesInPath();
+                  },
+                ),
+                leading: CustomIcon(
+                    icon: (isFolder)
+                        ? "assets/folder.png"
+                        : "assets/document.png")),
           );
         },
       );
@@ -83,5 +81,4 @@ class _FilesListViewState extends State<FilesListView> {
       child: content,
     );
   }
-
 }
