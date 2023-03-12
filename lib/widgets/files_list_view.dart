@@ -56,16 +56,18 @@ class _FilesListViewState extends State<FilesListView> {
                   style: textStyle,
                 ),
                 selected: index == _selectedElementIndex,
-                trailing: IconButton(
-                  icon: const Icon(
-                    CupertinoIcons.forward,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    appState.currentPhonePath += "/$element";
-                    appState.getFilesInPath();
-                  },
-                ),
+                trailing: (isFolder)
+                    ? IconButton(
+                        icon: const Icon(
+                          CupertinoIcons.forward,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          appState.currentPhonePath += "/$element";
+                          appState.getFilesInPath();
+                        },
+                      )
+                    : null,
                 leading: CustomIcon(
                     icon: (isFolder)
                         ? "assets/folder.png"
