@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'package:path/path.dart' as path;
+
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:foldie/enums/transfer_mode.dart';
 import 'package:foldie/utils/adb_commands.dart';
@@ -6,6 +10,7 @@ class DevicesState extends ChangeNotifier {
   List<String> attachedDevicesList = <String>[]; // list with attached devices
   String selectedDevice = "";
   String currentPhonePath = "/storage/emulated/0";
+  String currentMacPath = path.absolute(Platform.environment['HOME']!);
   List<String> filesList = <String>[];
   List<String> parentPathFileList = <String>[];
   String selectedFile = "";
@@ -82,7 +87,7 @@ class DevicesState extends ChangeNotifier {
       String element = filesInPath.substring(0, endIndex); // file or folder
       filesList.add(element);
       String remainingFiles =
-      filesInPath.substring(endIndex + 1); // remaining string
+          filesInPath.substring(endIndex + 1); // remaining string
       filesInPath = remainingFiles;
     }
   }
@@ -101,5 +106,33 @@ class DevicesState extends ChangeNotifier {
       transferMode = mode;
       notifyListeners();
     }
+  }
+
+  // Chooses a directory on your Mac and sets it as the destination of files
+  // transferred from your phone.
+  Future<void> getMacDirectoryPath() async {
+    const String confirmButtonText = 'Choose';
+    final String? directoryPath = await getDirectoryPath(
+      confirmButtonText: confirmButtonText,
+    );
+    if (directoryPath == null) {
+      // Operation was canceled by the user.
+      return;
+    }
+    currentMacPath = directoryPath;
+    notifyListeners();
+  }
+
+  void transferFiles() async {
+    String adbTransferCommand;
+    if (transferMode == TransferMode.phoneToMac) {
+      adbTransferCommand =
+          "pull \"$currentPhonePath/$selectedFile\" \"$currentMacPath\"";
+    } else {
+      adbTransferCommand = "push \"$currentMacPath\" \"$currentPhonePath\"";
+    }
+    String adbDevices = await AdbCommands.getAdbCommand(
+        "-s $selectedDevice $adbTransferCommand");
+    print(adbDevices);
   }
 }
