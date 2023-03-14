@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:foldie/providers/devices_provider.dart';
 import 'package:foldie/widgets/files_list_view.dart';
+import 'package:foldie/widgets/mac_path_text_field.dart';
 import 'package:foldie/widgets/side_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class TransferPage extends StatelessWidget {
                     children: [
                       const Expanded(
                         flex: 10,
-                        child: Placeholder(),
+                        child: MacPathTextField(),
                       ),
                       const SizedBox(width: 10),
                       CupertinoButton.filled(
