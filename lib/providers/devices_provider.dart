@@ -117,7 +117,7 @@ class DevicesState extends ChangeNotifier {
     );
     if (directoryPath == null) {
       // Operation was canceled by the user.
-      return "";
+      throw "No path selected by the user!";
     }
     currentMacPath = directoryPath;
     notifyListeners();

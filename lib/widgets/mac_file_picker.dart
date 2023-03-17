@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:foldie/providers/devices_provider.dart';
 import 'package:path/path.dart' as path;
@@ -51,13 +52,18 @@ class _MacFilePickerState extends State<MacFilePicker> {
         ),
         const SizedBox(width: 10),
         CupertinoButton.filled(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: const Text(
               "Browse...",
               style: TextStyle(
                   color: CupertinoColors.white, fontSize: 16),
             ),
             onPressed: () async {
-              _textController.text = await appState.getMacDirectoryPath();
+              try {
+                _textController.text = await appState.getMacDirectoryPath();
+              } catch (e) {
+                log(e.toString());
+              }
             }),
       ],
     );
