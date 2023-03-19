@@ -34,6 +34,9 @@ class _MacFilePickerState extends State<MacFilePicker> {
     var appState = context.watch<DevicesState>();
     return Row(
       children: [
+        const CupertinoNavigationBarBackButton(
+          color: CupertinoColors.inactiveGray,
+        ),
          Expanded(
           flex: 10,
           child: CupertinoTextField(
