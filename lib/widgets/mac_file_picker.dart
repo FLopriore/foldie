@@ -63,7 +63,7 @@ class _MacFilePickerState extends State<MacFilePicker> {
             ),
             onPressed: () async {
               try {
-                _textController.text = await appState.getMacDirectoryPath();
+                _textController.text = await appState.getPathOnMac();
               } catch (e) {
                 log(e.toString());
               }

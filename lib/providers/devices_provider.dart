@@ -108,20 +108,30 @@ class DevicesState extends ChangeNotifier {
     }
   }
 
-  // Chooses a directory on your Mac and sets it as the destination of files
-  // transferred from your phone.
-  Future<String> getMacDirectoryPath() async {
+  // Chooses a file or directory on your Mac.
+  // If transferMode is phoneToMac, it chooses a directory where to transfer
+  // files coming from your phone.
+  // If transferMode is macToPhone, it chooses a file to send to your phone.
+  Future<String> getPathOnMac() async {
     const String confirmButtonText = 'Choose';
-    final String? directoryPath = await getDirectoryPath(
-      confirmButtonText: confirmButtonText,
-    );
-    if (directoryPath == null) {
+    final String? elementPath;
+    if (transferMode == TransferMode.phoneToMac) {
+      elementPath = await getDirectoryPath(
+        confirmButtonText: confirmButtonText,
+      );
+    } else {
+      final XFile? file = await openFile(
+        confirmButtonText: confirmButtonText,
+      );
+      elementPath = file?.path;
+    }
+    if (elementPath == null) {
       // Operation was canceled by the user.
       throw "No path selected by the user!";
     }
-    currentMacPath = directoryPath;
+    currentMacPath = elementPath;
     notifyListeners();
-    return directoryPath;
+    return elementPath;
   }
 
   void transferFiles() async {
