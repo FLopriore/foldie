@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:foldie/providers/devices_provider.dart';
 import 'package:foldie/widgets/files_list_view.dart';
 import 'package:foldie/widgets/mac_file_picker.dart';
+import 'package:foldie/widgets/path_text.dart';
 import 'package:foldie/widgets/side_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,19 @@ class TransferPage extends StatelessWidget {
               child: Column(
                 children: [
                   const MacFilePicker(),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 30,
+                    child: Row(
+                      children: [
+                        const Text(
+                          "Phone path: ",
+                          style: TextStyle(fontWeight: FontWeight.w300),
+                        ),
+                        PathText(path: appState.currentPhonePath),
+                      ],
+                    ),
+                  ),
                   const Expanded(child: FilesListView()),
                   const SizedBox(height: 20),
                   CupertinoButton.filled(
