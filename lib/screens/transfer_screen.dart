@@ -4,6 +4,7 @@ import 'package:foldie/widgets/files_list_view.dart';
 import 'package:foldie/widgets/mac_file_picker.dart';
 import 'package:foldie/widgets/path_text.dart';
 import 'package:foldie/widgets/side_bar.dart';
+import 'package:foldie/widgets/custom_icon_button.dart';
 import 'package:provider/provider.dart';
 
 class TransferPage extends StatelessWidget {
@@ -35,7 +36,13 @@ class TransferPage extends StatelessWidget {
                           "Phone path: ",
                           style: TextStyle(fontWeight: FontWeight.w300),
                         ),
-                        PathText(path: appState.currentPhonePath),
+                        Expanded(child: PathText(path: appState.currentPhonePath)),
+                        CustomIconButton(
+                          icon: CupertinoIcons.arrow_up,
+                          color: CupertinoColors.white,
+                          iconSize: 20,
+                          onPressed: () {},
+                        ),
                       ],
                     ),
                   ),
