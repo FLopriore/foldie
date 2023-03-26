@@ -41,7 +41,7 @@ class TransferPage extends StatelessWidget {
                           icon: CupertinoIcons.arrow_up,
                           color: CupertinoColors.white,
                           iconSize: 20,
-                          onPressed: () {},
+                          onPressed: () => appState.moveToParentDirectory(),
                         ),
                       ],
                     ),

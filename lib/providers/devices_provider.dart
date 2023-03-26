@@ -12,7 +12,6 @@ class DevicesState extends ChangeNotifier {
   String currentPhonePath = "/storage/emulated/0";
   String currentMacPath = path.absolute(Platform.environment['HOME']!);
   List<String> filesList = <String>[];
-  List<String> parentPathFileList = <String>[];
   String selectedFile = "";
   TransferMode transferMode = TransferMode.macToPhone;
 
@@ -145,5 +144,17 @@ class DevicesState extends ChangeNotifier {
     String adbDevices = await AdbCommands.getAdbCommand(
         "-s $selectedDevice $adbTransferCommand");
     print(adbDevices);
+  }
+
+  // Moves to the parent directory on your phone.
+  // If the current path is /sdcard, it doesn't go any further.
+  void moveToParentDirectory() {
+    if (currentPhonePath != "/storage/emulated/0") {
+      // Find the index of the last "/" to remove the name of the current
+      // folder from the path.
+      int index = currentPhonePath.lastIndexOf("/");
+      currentPhonePath = currentPhonePath.substring(0, index);
+      getFilesInPath();
+    }
   }
 }
