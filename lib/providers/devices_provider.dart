@@ -18,7 +18,7 @@ class DevicesState extends ChangeNotifier {
   // Runs 'adb devices' command to get all the attached devices and adds
   // them in availableDevicesList.
   void getAdbDevices() async {
-    String adbDevices = await AdbCommands.getAdbCommand("devices");
+    String adbDevices = await AdbCommands.getAdbCommand(["devices"]);
 
     // Removes "List of devices attached" from adbDevices.
     adbDevices = adbDevices.substring(25);
@@ -66,7 +66,8 @@ class DevicesState extends ChangeNotifier {
   // and files in the current path.
   void getFilesInPath() async {
     String filesInPath = await AdbCommands.getAdbCommand(
-        "-s $selectedDevice shell ls $currentPhonePath");
+        ["-s", selectedDevice, "shell", "ls", currentPhonePath]
+    );
     if (filesInPath.isNotEmpty) {
       if (filesList.isNotEmpty) {
         filesList.clear();
@@ -137,7 +138,7 @@ class DevicesState extends ChangeNotifier {
     List<String> adbTransferArgs = (transferMode == TransferMode.phoneToMac)
         ? ["pull", "$currentPhonePath/$selectedFile", currentMacPath]
         : ["push", currentMacPath, currentPhonePath];
-    await Process.run('adb', adbTransferArgs);
+    String adbOutput = await AdbCommands.getAdbCommand(adbTransferArgs);
     getFilesInPath();
     notifyListeners();
   }

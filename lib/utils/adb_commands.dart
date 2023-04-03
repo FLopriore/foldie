@@ -1,13 +1,10 @@
-import 'package:flutter/services.dart';
+import 'dart:io';
 
 class AdbCommands {
-  static const adbChannel = MethodChannel('com.foldie/adb');
-
   /// It invokes the 'adb' command with the arguments specified in [args].
-  static Future<String> getAdbCommand(String args) async {
-    final arguments = {'command': args};
-    final String adbCommandOutput =
-        await adbChannel.invokeMethod('getAdbCommand', arguments);
+  static Future<String> getAdbCommand(List<String> args) async {
+    var process = await Process.run('adb', args);
+    String adbCommandOutput = process.stdout;
     return adbCommandOutput;
   }
 }
