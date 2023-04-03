@@ -133,17 +133,13 @@ class DevicesState extends ChangeNotifier {
     return elementPath;
   }
 
-  void transferFiles() async {
-    String adbTransferCommand;
-    if (transferMode == TransferMode.phoneToMac) {
-      adbTransferCommand =
-          "pull \"$currentPhonePath/$selectedFile\" \"$currentMacPath\"";
-    } else {
-      adbTransferCommand = "push \"$currentMacPath\" \"$currentPhonePath\"";
-    }
-    String adbDevices = await AdbCommands.getAdbCommand(
-        "-s $selectedDevice $adbTransferCommand");
-    print(adbDevices);
+  Future<void> transferFiles() async {
+    List<String> adbTransferArgs = (transferMode == TransferMode.phoneToMac)
+        ? ["pull", "$currentPhonePath/$selectedFile", currentMacPath]
+        : ["push", currentMacPath, currentPhonePath];
+    await Process.run('adb', adbTransferArgs);
+    getFilesInPath();
+    notifyListeners();
   }
 
   // Moves to the parent directory on your phone.

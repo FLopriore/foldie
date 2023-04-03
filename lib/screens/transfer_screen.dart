@@ -5,6 +5,7 @@ import 'package:foldie/widgets/mac_file_picker.dart';
 import 'package:foldie/widgets/path_text.dart';
 import 'package:foldie/widgets/side_bar.dart';
 import 'package:foldie/widgets/custom_icon_button.dart';
+import 'package:foldie/widgets/transfer_button.dart';
 import 'package:provider/provider.dart';
 
 class TransferPage extends StatelessWidget {
@@ -36,7 +37,8 @@ class TransferPage extends StatelessWidget {
                           "Phone path: ",
                           style: TextStyle(fontWeight: FontWeight.w300),
                         ),
-                        Expanded(child: PathText(path: appState.currentPhonePath)),
+                        Expanded(
+                            child: PathText(path: appState.currentPhonePath)),
                         CustomIconButton(
                           icon: CupertinoIcons.arrow_up,
                           color: CupertinoColors.white,
@@ -48,13 +50,7 @@ class TransferPage extends StatelessWidget {
                   ),
                   const Expanded(child: FilesListView()),
                   const SizedBox(height: 20),
-                  CupertinoButton.filled(
-                    child: const Text(
-                      "Copy",
-                      style: TextStyle(color: CupertinoColors.white),
-                    ),
-                    onPressed: () => appState.transferFiles(),
-                  ),
+                  const TransferButton(),
                 ],
               ),
             ),
