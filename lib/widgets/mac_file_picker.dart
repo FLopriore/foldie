@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:foldie/providers/devices_provider.dart';
+import 'package:foldie/utils/error_message.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:flutter/cupertino.dart';
@@ -48,7 +49,11 @@ class _MacFilePickerState extends State<MacFilePicker> {
             onSubmitted: (pathDirectory) {
               bool existPath = Directory(pathDirectory).existsSync();
               if (!existPath) {
-                _showAlertDialog(context);
+                ErrorMessage.showErrorDialog(
+                    context,
+                    "Directory doesn't exist",
+                    "Use a valid path."
+                );
               }
             },
           ),
@@ -69,24 +74,6 @@ class _MacFilePickerState extends State<MacFilePicker> {
               }
             }),
       ],
-    );
-  }
-
-  void _showAlertDialog(BuildContext context) {
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text("Directory doesn't exist"),
-        content: const Text("Use a valid path"),
-        actions: <CupertinoDialogAction>[
-          CupertinoDialogAction(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
     );
   }
 }
