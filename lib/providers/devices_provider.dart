@@ -134,13 +134,16 @@ class DevicesState extends ChangeNotifier {
     return elementPath;
   }
 
-  Future<void> transferFiles() async {
+  // Transfers files using adb push/pull.
+  // Returns the exit code of the command to catch any possible errors.
+  Future<int> transferFiles() async {
     List<String> adbTransferArgs = (transferMode == TransferMode.phoneToMac)
         ? ["pull", "$currentPhonePath/$selectedFile", currentMacPath]
         : ["push", currentMacPath, currentPhonePath];
-    String adbOutput = await AdbCommands.getAdbCommand(adbTransferArgs);
+    int adbExitCode = await AdbCommands.adbCmdWithExitCode(adbTransferArgs);
     getFilesInPath();
     notifyListeners();
+    return adbExitCode;
   }
 
   // Moves to the parent directory on your phone.

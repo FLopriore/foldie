@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:foldie/enums/transfer_mode.dart';
 import 'package:foldie/providers/devices_provider.dart';
+import 'package:foldie/utils/error_message.dart';
 import 'package:provider/provider.dart';
 
 class TransferButton extends StatefulWidget {
@@ -25,10 +26,17 @@ class _TransferButtonState extends State<TransferButton> {
             children: [
               CupertinoButton.filled(
                 onPressed: (value)
-                    ? null  // disable onPressed while is loading
+                    ? null // disable onPressed while is loading
                     : () async {
                         isLoading.value = true;
-                        await appState.transferFiles();
+                        int exitCode = await appState.transferFiles();
+                        if (exitCode == 1 && context.mounted) {
+                          ErrorMessage.showErrorDialog(
+                            context,
+                            "Transfer Error",
+                            "Try again or replug your phone."
+                          );
+                        }
                         isLoading.value = false;
                       },
                 child: Text(
