@@ -12,6 +12,8 @@ class PathText extends StatelessWidget {
         path.replaceAll(RegExp("/storage/emulated/0"), "/sdcard");
     return Text(
       shortPath,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
       style: const TextStyle(
         color: CupertinoColors.inactiveGray,
         fontWeight: FontWeight.w300,
