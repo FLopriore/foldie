@@ -20,23 +20,25 @@ class DevicesState extends ChangeNotifier {
   void getAdbDevices() async {
     String adbDevices = await AdbCommands.getAdbCommand(["devices"]);
 
-    // Removes "List of devices attached" from adbDevices.
-    adbDevices = adbDevices.substring(25);
+    if (adbDevices.isNotEmpty) {
+      // Removes "List of devices attached" from adbDevices.
+      adbDevices = adbDevices.substring(25);
 
-    if (adbDevices != "\n") {
-      if (attachedDevicesList.isNotEmpty) {
+      if (adbDevices != "\n") {
+        if (attachedDevicesList.isNotEmpty) {
+          attachedDevicesList.clear();
+        }
+        // Adds devices to the list.
+        _addDevicesInList(adbDevices);
+        // Selects the first device of the list by default.
+        selectedDevice = attachedDevicesList.elementAt(0);
+      } else {
+        // Remove any previously-attached device from the list.
         attachedDevicesList.clear();
+        selectedDevice = "";
       }
-      // Adds devices to the list.
-      _addDevicesInList(adbDevices);
-      // Selects the first device of the list by default.
-      selectedDevice = attachedDevicesList.elementAt(0);
-    } else {
-      // Remove any previously-attached device from the list.
-      attachedDevicesList.clear();
-      selectedDevice = "";
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   // Selects the attached device linked to the index.
