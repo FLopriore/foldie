@@ -1,16 +1,25 @@
-# foldie
+# Foldie
+<p align="center">  
+<img src="images/foldie_icon.png" width="512px" alt="Foldie Logo">
+</p>
 
-Transfer files between Android and Mac.
+## Description
 
-## Getting Started
+Utility to transfer files between your Android smartphone and Mac.  
 
-This project is a starting point for a Flutter application.
+Written in Flutter, it uses adb to find connected devices and transfer files with them.
 
-A few resources to get you started if this is your first Flutter project:
+## Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Install the latest version from the [Release](https://github.com/FLopriore/foldie/releases) section.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Otherwise, you can build it from source by running:
+
+```
+flutter build macos --release
+```
+
+## Screenshots
+![Image](images/available_devices_screen.png)
+
+![Image](images/transfer_screen.png)
