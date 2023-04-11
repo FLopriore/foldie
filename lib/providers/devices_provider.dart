@@ -145,8 +145,8 @@ class DevicesState extends ChangeNotifier {
   // Returns the exit code of the command to catch any possible errors.
   Future<int> transferFiles() async {
     List<String> adbTransferArgs = (transferMode == TransferMode.phoneToMac)
-        ? ["pull", "$currentPhonePath/$selectedFile", currentMacPath]
-        : ["push", currentMacPath, currentPhonePath];
+        ? ["-s", selectedDevice, "pull", "$currentPhonePath/$selectedFile", currentMacPath]
+        : ["-s", selectedDevice, "push", currentMacPath, currentPhonePath];
     int adbExitCode = await AdbCommands.adbCmdWithExitCode(adbTransferArgs);
     getFilesInPath();
     notifyListeners();
